@@ -1,0 +1,9 @@
+%[sig, Fs] = audioread('mansinging.wav');
+Fs = 48000;
+EQ_SPAN_MSEC = 6; %% width of FIR for equalisation curve, limits lowest freqs at which significant gain changes can occur
+%insrt_gns = [0 3 5 10 15 20 25 30 30 30]; %% dB for 65 dB input
+insrt_gns = [0 3 3 3 3 3 3 3 3 3]; %% dB for 65 dB input
+insrt_frqs = [125, 250, 500, 1000, 2000, 3000, 4000, 6000, 8000, 10000 ]; %% decimal values
+PRESCRIPT = 1;
+[ig_eq all_ok] = prescription_design_function(insrt_frqs, insrt_gns, Fs, EQ_SPAN_MSEC, PRESCRIPT);
+output = conv(sig,ig_eq);
